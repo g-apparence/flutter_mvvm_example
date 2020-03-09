@@ -1,5 +1,8 @@
-# todo_app
+# Todo app example for MVVM Builder flutter plugin
 
-A new Flutter application.
+This app is a demonstration of architecture built with [MVVM-BUILDER](https://github.com/g-apparence/flutter_mvvm)
+
 
 ## Getting Started
+
+Clone this repo and explore the code. 

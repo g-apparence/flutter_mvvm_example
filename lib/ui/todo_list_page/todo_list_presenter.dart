@@ -5,6 +5,11 @@ import 'package:todo_app/ui/todo_list_page/adapters/todo_list_model_adapter.dart
 import 'package:todo_app/ui/todo_list_page/todo_list_model.dart';
 import 'package:todo_app/ui/todo_list_page/todo_list_page.dart';
 
+
+/// this class is the most important here
+/// This is where you wrap all business logic
+/// All view interactions use cases will modify model
+/// Our view as to stay idiot and just bind values from the model
 class TodoListPresenter extends Presenter<TodoListModel, TodoListView>{
 
   final TodoListService _service;

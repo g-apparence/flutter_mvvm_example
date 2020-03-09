@@ -3,15 +3,27 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
+import 'package:mvvm_builder/component_builder.dart';
 import 'package:todo_app/database/adapters/todo_list_entity_adapter.dart';
 
 import 'package:todo_app/services/todo_list_service.dart';
 import 'package:todo_app/ui/todo_list_page/todo_list_page.dart';
 import 'package:todo_app/widgets/todo_widget.dart';
 
+import '../../../lib/ui/todo_list_page/todo_list_model.dart';
+import '../../../lib/ui/todo_list_page/todo_list_presenter.dart';
+
 class _TodoListServiceMock extends Mock implements TodoListService{}
 
 class _NavigatorObserverMock extends Mock implements NavigatorObserver{}
+
+/// this is an example if you want to test directly the presenter or use it in your tests
+/// you can test methods directly and check if business logic is good in model
+_getPresenter(WidgetTester tester, Widget app) {
+  var page = find.byKey(ValueKey('todoList')).evaluate().first.widget as MVVMPage<TodoListPresenter, TodoListModel>;
+  return page.presenter;
+}
+
 
 _before(WidgetTester tester, {_TodoListServiceMock serviceMock, _NavigatorObserverMock navigatorMock}) async{
 
