@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:mvvm_builder/component_builder.dart';
-import 'package:todo_app/services/todo_list_service.dart';
+import 'package:todo_app/services/todo_list/todo_list_service.dart';
 import 'package:todo_app/ui/todo_form_page/todo_form_model.dart';
 import 'package:todo_app/ui/todo_form_page/todo_form_presenter.dart';
 
@@ -23,7 +23,7 @@ class TodoFormPage extends StatelessWidget implements TodoFormView {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add todo'),
+        title: Text('MVVM builder Todo app'),
       ),
       body: MVVMPage<TodoFormPresenter, TodoFormModel>(
         key: ValueKey('todoForm'),

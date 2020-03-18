@@ -6,7 +6,7 @@ import 'package:mockito/mockito.dart';
 import 'package:mvvm_builder/component_builder.dart';
 import 'package:todo_app/database/adapters/todo_list_entity_adapter.dart';
 
-import 'package:todo_app/services/todo_list_service.dart';
+import 'package:todo_app/services/todo_list/todo_list_service.dart';
 import 'package:todo_app/ui/todo_list_page/todo_list_page.dart';
 import 'package:todo_app/widgets/todo_widget.dart';
 

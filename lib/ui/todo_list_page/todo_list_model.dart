@@ -9,6 +9,7 @@ class TodoListModel extends MVVMModel{
 class Todo {
   int id;
   String title, subtitle;
+  bool done;
 
-  Todo({this.id, this.title, this.subtitle});
+  Todo({this.id, this.title, this.subtitle, this.done = false});
 }

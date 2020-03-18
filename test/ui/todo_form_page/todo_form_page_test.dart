@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:todo_app/database/entities/todo_entity.dart';
 
-import 'package:todo_app/services/todo_list_service.dart';
+import 'package:todo_app/services/todo_list/todo_list_service.dart';
 import 'package:todo_app/ui/todo_form_page/todo_form_page.dart';
 
 class _TodoListServiceMock extends Mock implements TodoListService{}

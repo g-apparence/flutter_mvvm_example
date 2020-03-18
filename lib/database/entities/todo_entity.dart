@@ -1,7 +1,17 @@
+import 'dart:convert';
+
 class TodoEntity {
   int id;
+  String title;
+  String subtitle;
+  bool done;
 
-  String title, subtitle;
+  TodoEntity({this.id, this.title, this.subtitle, this.done = false});
 
-  TodoEntity({this.id, this.title, this.subtitle});
+  toJson() => {
+      "id": this.id,
+      "title": this.title,
+      "subtitle": this.subtitle,
+      "done": this.done,
+  };
 }
