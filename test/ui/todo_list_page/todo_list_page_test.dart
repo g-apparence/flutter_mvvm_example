@@ -36,6 +36,11 @@ _before(WidgetTester tester, {_TodoListServiceMock serviceMock, _NavigatorObserv
   // Mock navigator
   navigatorMock = navigatorMock ?? _NavigatorObserverMock();
 
+  TodoListPageBuilder todoListPageBuilder = TodoListPageBuilder(
+    service: serviceMock,
+    todoListView: BasicTodoListView()
+  );
+
   await tester.pumpWidget(
       MediaQuery(
         data: MediaQueryData(),
@@ -44,7 +49,7 @@ _before(WidgetTester tester, {_TodoListServiceMock serviceMock, _NavigatorObserv
           routes: {
             "/addTodo": (context) => Container(key: Key("addTodoRoute")),
           },
-          home: TodoListPage(service: serviceMock),
+          home: Builder(builder: (context) => todoListPageBuilder.build(context)),
         ),
       ),
   );
@@ -81,26 +86,26 @@ void main() {
       await _before(tester);
 
       // tap on first element
-      await tester.tap(find.byKey(ValueKey('todo0')));
+      await tester.longPress(find.byKey(ValueKey('todo0')));
       await tester.pump();
 
       // Check dialog is opened.
       expect(find.byKey(ValueKey('alertDialog')), findsOneWidget);
-      expect(find.text('Have you done : First todo ?'), findsOneWidget);
+      expect(find.text('Wants to delete : First todo ?'), findsOneWidget);
 
       expect(find.byKey(ValueKey('doneButton')), findsOneWidget);
-      expect(find.text('DONE'), findsOneWidget);
+      expect(find.text('Yes'), findsOneWidget);
 
       expect(find.byKey(ValueKey('notDoneButton')), findsOneWidget);
-      expect(find.text('NOT DONE'), findsOneWidget);
+      expect(find.text('No'), findsOneWidget);
     });
 
-    testWidgets('Test on "DONE" button tap', (WidgetTester tester) async {
+    testWidgets('Test on "Yes" button tap', (WidgetTester tester) async {
       _TodoListServiceMock serviceMock = _TodoListServiceMock();
       await _before(tester, serviceMock: serviceMock);
 
       // tap on first element
-      await tester.tap(find.byKey(ValueKey('todo0')));
+      await tester.longPress(find.byKey(ValueKey('todo0')));
       await tester.pump();
 
       // tap on DONE button
@@ -126,11 +131,11 @@ void main() {
       verify(serviceMock.removeTodo(10)).called(1);
     });
 
-    testWidgets('Test on "NOT DONE" button tap', (WidgetTester tester) async {
+    testWidgets('Test on "No" button tap', (WidgetTester tester) async {
       await _before(tester);
 
       // tap on first element
-      await tester.tap(find.byKey(ValueKey('todo0')));
+      await tester.longPress(find.byKey(ValueKey('todo0')));
       await tester.pump();
 
       // tap on DONE button

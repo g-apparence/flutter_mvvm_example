@@ -10,10 +10,14 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
 
   int currentIndex = 0;
+  TodoListPageBuilder todoListPageBuilder;
+  StatsPage statsPage = StatsPage();
 
-  final List<Widget> pages = List()
-    ..add(TodoListPage())
-    ..add(StatsPage());
+  @override
+  void initState() {
+    super.initState();
+    this.todoListPageBuilder = TodoListPageBuilder(todoListView: BasicTodoListView());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +25,9 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text('MVVM builder Todo app'),
       ),
-      body: pages[currentIndex],
+      body: currentIndex == 0
+        ? todoListPageBuilder.build(context)
+        : statsPage,
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentIndex,
         onTap: (index) {

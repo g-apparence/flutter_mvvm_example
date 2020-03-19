@@ -18,8 +18,14 @@ class TodoListPresenter extends Presenter<TodoListModel, TodoListView>{
   TodoListPresenter(TodoListView viewInterface, TodoListService service)
     : this._service = service, super(TodoListModel(), viewInterface);
 
+  factory TodoListPresenter.create(TodoListService service)
+    => TodoListPresenter(null, service);
+
   @override
-  Future onInit() {
+  Future onInit() async {
+    if(_isAlreadyInit) {
+      return;
+    }
     this.viewModel.isLoading = true;
     return this._service.getTodoList().then((todoList){
       TodoListModelAdapter().parse(this.viewModel, todoList);
@@ -60,4 +66,6 @@ class TodoListPresenter extends Presenter<TodoListModel, TodoListView>{
     // updates if user clicks too fast
 
   }
+
+
 }

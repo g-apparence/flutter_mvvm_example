@@ -6,19 +6,32 @@ import 'package:todo_app/ui/todo_list_page/todo_list_presenter.dart';
 import 'package:todo_app/widgets/add_button_widget.dart';
 import 'package:todo_app/widgets/todo_widget.dart';
 
-abstract class TodoListView {}
+/// this is the contract we can use from our presenter
+abstract class TodoListView {
 
-class TodoListPage extends StatelessWidget implements TodoListView {
+}
 
-  final TodoListService _service;
+/// this is the basic implementation of our contract
+class BasicTodoListView implements TodoListView {
 
-  TodoListPage({TodoListService service, Key key}): this._service = service, super(key: key);
+}
 
-  @override
+/// this way we keep the presenter state through builds
+/// If you want to add animations, add your Controllers here
+class TodoListPageBuilder {
+
+  final TodoListService service;
+  final TodoListView todoListView;
+  TodoListPresenter presenter;
+
+  TodoListPageBuilder({this.service, @required this.todoListView}) {
+    presenter = TodoListPresenter(todoListView, service ?? TodoListService.instance);
+  }
+
   Widget build(BuildContext context) {
     return MVVMPage<TodoListPresenter, TodoListModel>(
       key: ValueKey('todoList'),
-      presenter: TodoListPresenter(this, this._service ?? TodoListService.instance),
+      presenter: presenter,
       builder: (context, presenter, model) {
         if (model.isLoading) {
           return Center(
@@ -34,7 +47,6 @@ class TodoListPage extends StatelessWidget implements TodoListView {
             ),
           );
         }
-        print("=> length ${model.todoList.length}");
         return Stack(
           children: <Widget>[
             ListView.builder(
@@ -92,3 +104,4 @@ class TodoListPage extends StatelessWidget implements TodoListView {
     );
   }
 }
+
