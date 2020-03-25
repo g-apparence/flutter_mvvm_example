@@ -47,10 +47,12 @@ class TodoListPresenter extends Presenter<TodoListModel, TodoListView>{
     if (entity == null) {
       return;
     }
-    this.viewModel.todoList.add(Todo(
+    // this should use [TodoListModelAdapter] to prevent bad conversion
+    this.viewModel.todoList.insert(0, Todo(
+      id: entity.id,
       title: entity.title,
       subtitle: entity.subtitle,
-      done: false
+      done: entity.done
     ));
     this.refreshView();
   }
@@ -64,6 +66,7 @@ class TodoListPresenter extends Presenter<TodoListModel, TodoListView>{
     // this is where you want to call your server to update de done status
     // note that you could wrap this in a debounce strategy to avoid multiple
     // updates if user clicks too fast
+    await this._service.updateTodo(this.viewModel.todoList[index].id, done);
 
   }
 

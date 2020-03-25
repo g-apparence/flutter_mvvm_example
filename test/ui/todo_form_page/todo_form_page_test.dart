@@ -12,7 +12,7 @@ _before(WidgetTester tester, {_TodoListServiceMock serviceMock}) async{
 
   // Mock service
   serviceMock = serviceMock ?? _TodoListServiceMock();
-  when(serviceMock.saveTodo(any)).thenAnswer((_) => Future.value(TodoEntity(
+  when(serviceMock.saveTodo(any, any)).thenAnswer((_) => Future.value(TodoEntity(
     id: 50,
     title: 'title test',
     subtitle: 'subtitle test'
@@ -55,7 +55,7 @@ void main() {
       await tester.tap(find.byKey(ValueKey('saveButton')));
       await tester.pump();
 
-      verifyNever(serviceMock.saveTodo(any));
+      verifyNever(serviceMock.saveTodo(any, any));
     });
 
     testWidgets('Tap on save Button with filled fields', (WidgetTester tester) async {
@@ -74,7 +74,7 @@ void main() {
       // Tap on save button
       await  tester.tap(find.byKey(ValueKey('saveButton')));
 
-      verify(serviceMock.saveTodo(any)).called(1);
+      verify(serviceMock.saveTodo(any, any)).called(1);
     });
 
 }

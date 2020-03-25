@@ -50,9 +50,6 @@ class TodoFormPresenter extends Presenter<TodoFormModel, TodoFormView>{
     }
     this.refreshView();
     this._saveFields();
-    return this._service.saveTodo(TodoEntity(
-      title: this.viewModel.title,
-      subtitle: this.viewModel.subtitle,
-    ));
+    return this._service.saveTodo(this.viewModel.title, this.viewModel.subtitle);
   }
 }

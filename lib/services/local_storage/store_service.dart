@@ -15,6 +15,8 @@ class StoreService<T> {
 
   StoreService(this.storageManager, this.itemAdapter, this.maxLength);
 
+  Future<bool> get isFirstInit => this.storageManager.isFirstInit();
+
   Future init() async {
     assert(this.storageManager != null);
     if (hasInit) {
@@ -25,7 +27,6 @@ class StoreService<T> {
       fileContent = await this.storageManager.read();
       List<T> items = itemAdapter.parseArray(fileContent);
       this.queue = new ListQueue.from(items);
-
     } catch (e) {
       print("Error while loading file content... $e");
       this.queue = new ListQueue();
@@ -43,6 +44,17 @@ class StoreService<T> {
       this.queue.removeLast();
     }
     this.queue.addFirst(entity);
+    var encoded = json.encode(this.queue.toList());
+    return this.storageManager.store(encoded);
+  }
+
+  Future save(List<T> items) async {
+    assert(hasInit);
+    if (items.length >= this.maxLength) {
+      return Future.error("TOO_MANY_ELEMENTS");
+    }
+    this.queue.clear();
+    this.queue.addAll(items);
     var encoded = json.encode(this.queue.toList());
     return this.storageManager.store(encoded);
   }

@@ -9,6 +9,7 @@ class TodolistStorageModelAdapter extends GenericEntityAdapter<TodoEntity> {
       id: map['id'],
       title: map['title'],
       subtitle: map['subtitle'],
+      done: map['done']
     );
   }
 

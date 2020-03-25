@@ -6,6 +6,10 @@ abstract class StorageManager {
   Future store(String value);
 
   Future<String> read();
+
+  Future<bool> isFirstInit();
+
+  Future<void> deleteFile(String fileName);
 }
 
 
@@ -23,6 +27,13 @@ class MockStorageManager implements StorageManager {
       this._value = value;
     });
   }
+
+  Future<void> deleteFile(String fileName) async  {
+
+  }
+
+  @override
+  Future<bool> isFirstInit() => Future.value(true);
 
 }
 
@@ -44,6 +55,9 @@ class LocalStorageManager implements StorageManager {
     return getlocalFile(filename).then((file) => file.readAsStringSync());
   }
 
+  @override
+  Future<bool> isFirstInit() => finalPath.then((path) async => !File(path).existsSync());
+
   Future<File> getlocalFile(String filename) async {
     return getApplicationDocumentsDirectory().then((path) {
       String finalPath = path.path + '/' + filename;
@@ -58,6 +72,8 @@ class LocalStorageManager implements StorageManager {
       });
     });
   }
+
+  Future<String> get finalPath => getApplicationDocumentsDirectory().then((path) => path.path + '/' + filename);
 
   Future<void> deleteFile(String fileName) async {
     try {
